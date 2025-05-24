@@ -12,23 +12,23 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("kishoresandy/kishore-node-app")
-                }
-            }
+       stage('Build Docker Image') {
+    steps {
+        script {
+            dockerImage = docker.build("kishoresandy/kishore-node-app")
         }
+    }
+}
 
-        stage('Push to DockerHub') {
-            steps {
-                withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
-                    script {
-                        docker.image("${IMAGE_NAME}:latest").push()
-                    }
-                }
+stage('Push to DockerHub') {
+    steps {
+        withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
+            script {
+                dockerImage.push("latest")
             }
         }
+    }
+}
 
         stage('Deploy to K8s') {
             steps {
