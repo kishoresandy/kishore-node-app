@@ -31,10 +31,9 @@ stage('Push to DockerHub') {
 }
 
         stage('Deploy to K8s') {
-            steps {
-                sh 'kubectl apply -f k8s-deployment.yaml'
-            }
+    steps {
+        withEnv(["KUBECONFIG=/var/lib/jenkins/.kube/config"]) {
+            sh 'kubectl apply -f k8s-deployment.yaml'
         }
     }
 }
-
