@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/kishoresandy/kishore-node-app'
+                git branch: 'main', url: 'https://github.com/kishoresandy/kishore-node-app.git'
             }
         }
 
